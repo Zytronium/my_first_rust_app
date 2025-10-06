@@ -1,13 +1,15 @@
 use std::io;
 use rand::Rng;
+use std::cmp::Ordering;
 
 fn main() {
     // Input/output & variables
     println!("What is your name?");
     let mut input = String::new();
     io::stdin().read_line(&mut input).unwrap();
-    println!("\nHello, {}!", input.trim());
+    println!("\nHello, {}!", &input.trim());
     if input.trim().to_lowercase() == "obama" {
+        input.clear();
         println!("Obama? What is your last name?");
         io::stdin().read_line(&mut input).unwrap();
         println!("Obama's last name is {}", input.trim());
@@ -35,5 +37,13 @@ fn main() {
 
     // ------------------------------------------------- \\
     // Using cmp
-    //todo: finish this. Am too tired rn
+    let guess = rand::thread_rng().gen_range(1..=1234);
+
+    println!("Guessing the secret... Guess: {}", guess);
+
+    match guess.cmp(&secret) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Equal => println!("Correct!"),
+        Ordering::Greater => println!("Too big!"),
+    }
 }
